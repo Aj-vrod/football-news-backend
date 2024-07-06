@@ -8,8 +8,9 @@ import (
 )
 
 func NewsV1Handler(w http.ResponseWriter, _ *http.Request) {
+	news := ScraperNews()
 	res := models.NewsV1Response{
-		Success: true,
+		Results: news,
 	}
 	out, err := json.Marshal(res)
 	if err != nil {
