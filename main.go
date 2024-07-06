@@ -1,12 +1,9 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/football-news-backend/pkg/server"
-)
+import newsv1 "github.com/football-news-backend/pkg/news/v1"
 
 func main() {
-	fmt.Println("Listening in port :8080")
-	server.InitServer()
+	// fmt.Println("Listening in port :8080")
+	// server.InitServer()
+	newsv1.Scraper()
 }
