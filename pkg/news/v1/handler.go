@@ -7,7 +7,7 @@ import (
 	"github.com/football-news-backend/pkg/models"
 )
 
-func NewsV1Handler(w http.ResponseWriter, req *http.Request) {
+func NewsV1Handler(w http.ResponseWriter, _ *http.Request) {
 	res := models.NewsV1Response{
 		Success: true,
 	}
