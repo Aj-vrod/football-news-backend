@@ -1,17 +1,21 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/football-news-backend/pkg/db"
 	"github.com/football-news-backend/pkg/server"
 )
 
 func main() {
-	fmt.Println("Starting database...")
-	db.InitDB()
+	log.Println("Starting database...")
+	err := db.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("All ready!")
 
-	fmt.Println("Listening in port :8080")
+	log.Println("Listening in port :8080")
 	server.InitServer()
 
 }

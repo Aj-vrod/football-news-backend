@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -11,41 +12,49 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func InitDB() {
-	DB_DNS := os.Getenv("POSTGRESQL_DNS")
-	MIGRATIONS_DIR := os.Getenv("MIGRATIONS_PATH")
-
-	if MIGRATIONS_DIR == "" {
-		fmt.Println("Missing env variable MIGRATIONS_PATH")
-		return
-	}
-
-	if DB_DNS == "" {
-		fmt.Println("Missing env variable POSTGRESQL_DNS")
-		return
-	}
-
-	db, err := sql.Open("postgres", DB_DNS)
+func InitDB() error {
+	var DB *sql.DB
+	DB_DNS, MIGRATIONS_DIR, err := getEnvs()
 	if err != nil {
-		fmt.Println("Failed to connect to db: ", err)
-		return
+		return err
 	}
-	driver, err := postgres.WithInstance(db, &postgres.Config{})
+
+	DB, err = sql.Open("postgres", DB_DNS)
 	if err != nil {
-		fmt.Println("Failed to get driver: ", err)
-		return
+		log.Println("Failed to open connection with DB.")
+		return err
+	}
+	driver, err := postgres.WithInstance(DB, &postgres.Config{})
+	if err != nil {
+		log.Println("Failed to get driver.")
+		return err
 	}
 	m, err := migrate.NewWithDatabaseInstance(
 		MIGRATIONS_DIR,
 		"football", driver)
 	if err != nil {
-		fmt.Println("Failed to get migrate instance: ", err)
-		return
+		log.Println("Failed to get migrate instance.")
+		return err
 	}
 
 	err = m.Up()
 	if err != nil {
-		fmt.Println("Failed to run migrations: ", err)
-		return
+		log.Println("Failed to run migrations.")
+		return err
 	}
+
+	return nil
+}
+
+func getEnvs() (string, string, error) {
+	migrationsPath := os.Getenv("MIGRATIONS_PATH")
+	dbDns := os.Getenv("POSTGRESQL_DNS")
+	if migrationsPath == "" {
+		return "", "", fmt.Errorf("missing env variable MIGRATIONS_PATH")
+	}
+	if dbDns == "" {
+		return "", "", fmt.Errorf("missing env variable POSTGRESQL_DNS")
+	}
+
+	return dbDns, migrationsPath, nil
 }
