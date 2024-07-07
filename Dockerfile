@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY ./ ./
 
-ENV POSTGRESQL_DNS="postgres://postgres:password@localhost:5432/football?sslmode=disable"
+ENV POSTGRESQL_DNS="postgres://postgres:postgres@db:5432/football?sslmode=disable"
 ENV MIGRATIONS_PATH="file://migrations"
 RUN CGO_ENABLED=0 GOOS=linux go build -o /football-news
 
