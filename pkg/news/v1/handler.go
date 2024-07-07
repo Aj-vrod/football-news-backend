@@ -2,6 +2,7 @@ package newsv1
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/football-news-backend/pkg/models"
@@ -14,8 +15,9 @@ func NewsV1Handler(w http.ResponseWriter, _ *http.Request) {
 	}
 	out, err := json.Marshal(res)
 	if err != nil {
-		panic("OH NO!")
+		log.Println("Failed to marshall response for /news/v1")
 	}
 
+	w.WriteHeader(200)
 	w.Write(out)
 }
