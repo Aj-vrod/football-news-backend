@@ -26,6 +26,11 @@ Run the app with `go run main.go`
 
 Build app and db containers with `docker-compose up -d`
 
+## Port
+
+- 8080
+
 ## Endpoints
 
-- `/news/v1` - to get latest news about football
+- `/v1/news` - to get latest news about football
+- `/v1/ask` - to ask about football things
