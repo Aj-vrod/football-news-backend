@@ -10,15 +10,6 @@ import (
 	"google.golang.org/api/option"
 )
 
-type GeminiConfig struct {
-	ctx context.Context
-}
-
-type GeminiClient struct {
-	model *genai.GenerativeModel
-	ctx   context.Context
-}
-
 func GenerateConfig(context context.Context) GeminiConfig {
 	return GeminiConfig{
 		ctx: context,
