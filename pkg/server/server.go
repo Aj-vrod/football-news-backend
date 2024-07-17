@@ -9,7 +9,8 @@ import (
 
 func InitServer() {
 	mux := muxtrace.NewRouter()
-	mux.HandleFunc("/news/v1", newsv1.NewsV1Handler).Methods("GET")
+	mux.HandleFunc("v1/news", newsv1.NewsV1Handler).Methods("GET")
+	mux.HandleFunc("v1/ask", newsv1.NewsV1Handler).Methods("GET")
 
 	http.ListenAndServe(":8080", mux)
 }
