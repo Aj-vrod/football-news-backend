@@ -18,6 +18,6 @@ func NewsV1Handler(w http.ResponseWriter, _ *http.Request) {
 		log.Println("Failed to marshall response for /news/v1")
 	}
 
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusAccepted)
 	w.Write(out)
 }

@@ -7,27 +7,29 @@ import (
 	"net/http"
 
 	"github.com/football-news-backend/pkg/llm"
-	"github.com/gorilla/mux"
 )
 
-type askV1Response struct {
-	answer string
-}
-
-type askV1FailureResponse struct {
-	warning string
+type AskV1Response struct {
+	Answer string `json:"answer"`
 }
 
 func AskV1Handler(w http.ResponseWriter, req *http.Request) {
 	gemini := initGemini()
-	query := mux.Vars(req)["query"]
+	values := req.URL.Query()
+	query := values["query"][0]
 
 	if query == "" {
-		json.NewEncoder(w).Encode(askV1FailureResponse{warning: "Missing query for your request."})
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	ans := gemini.GenerateAnswer(query)
-	json.NewEncoder(w).Encode(askV1Response{answer: ans})
+	out := AskV1Response{
+		Answer: ans,
+	}
+	outJSON, _ := json.Marshal(out)
+	w.WriteHeader(http.StatusAccepted)
+	w.Write(outJSON)
 }
 
 func initGemini() llm.GeminiClient {
