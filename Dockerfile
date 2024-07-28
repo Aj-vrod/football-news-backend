@@ -1,4 +1,4 @@
-FROM golang:1.19
+FROM golang:1.21
 
 WORKDIR /app
 
@@ -8,8 +8,14 @@ RUN go mod download
 
 COPY ./ ./
 
-ENV POSTGRESQL_DNS="postgres://postgres:postgres@db:5432/football?sslmode=disable"
-ENV MIGRATIONS_PATH="file://migrations"
+ARG dns="postgres://postgres:postgres@db:5432/football?sslmode=disable"
+ARG migrations_path="file://migrations"
+ARG gemini_key="dummy"
+
+ENV POSTGRESQL_DNS=${dns}
+ENV MIGRATIONS_PATH=${migrations_path}
+ENV GEMINI_KEY=${gemini_key}
+
 RUN CGO_ENABLED=0 GOOS=linux go build -o /football-news
 
 EXPOSE 8080

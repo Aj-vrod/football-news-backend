@@ -6,27 +6,21 @@ Find infrastructure digragram [here](https://miro.com/welcomeonboard/QmdaZmNUV0x
 
 ## Running locally
 
-### Local
+### For development
 
-1. Export env variables. Follow `examples.env` file to export required variables.
+1. List the required env variables in a `.env` file. Follow `examples.env` file to learn what they are.
 
-2. Start a `football` postgres database, for example, with Docker:
+2. Comment out the app service from docker-compose.yaml
 
-```
-docker run \
---rm --name postgres \
--e POSTGRES_USER=postgres \
--e POSTGRES_PASSWORD=postgres \
--e POSTGRES_DB=football \
--p 5432:5432 \
--d postgres:latest
-```
+3. Start the db with `docker-compose up -d`
 
-3. Run the app with `go run main.go`
+4. Run the app with `go run main.go`
 
-### With docker-compose
+### For simple building
 
-1. Build app and db containers with `docker-compose up -d`
+1. List the required env variables in a `.env` file. Follow `examples.env` file to learn what they are.
+
+2. Build app and db containers with `docker-compose up -d`
 
 ## Port
 
@@ -39,8 +33,8 @@ docker run \
 
 ## Planned tasks (in no specific order)
 
-- [ ] Update Dockerfile to include Gemini token
-- [ ] Move Docker env outside, to prevent hardcoded values
+- [x] Update Dockerfile to include Gemini token
+- [x] Move Docker env outside, to prevent hardcoded values
 - [ ] Create curated prompt for Gemini
 - [ ] Create DB client to enable `INSERT` and `SELECT` queries
 - [ ] Create Storage package to store data into DB
