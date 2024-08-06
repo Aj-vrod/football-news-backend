@@ -12,19 +12,24 @@ import (
 	_ "github.com/lib/pq"
 )
 
+type Database struct {
+	DB *sql.DB
+}
+
+var DBInstance Database
+
 func InitDB() error {
-	var DB *sql.DB
 	DB_DNS, MIGRATIONS_DIR, err := getEnvs()
 	if err != nil {
 		return err
 	}
 
-	DB, err = sql.Open("postgres", DB_DNS)
+	DBInstance.DB, err = sql.Open("postgres", DB_DNS)
 	if err != nil {
 		log.Println("Failed to open connection with DB.")
 		return err
 	}
-	driver, err := postgres.WithInstance(DB, &postgres.Config{})
+	driver, err := postgres.WithInstance(DBInstance.DB, &postgres.Config{})
 	if err != nil {
 		log.Println("Failed to get driver.")
 		return err
