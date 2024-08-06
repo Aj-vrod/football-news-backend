@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS News(
 	title VARCHAR(200) NOT NULL,
 	link VARCHAR(100) NOT NULL,
 	source VARCHAR(100) NOT NULL,
-	creation_date VARCHAR(20) NOT NULL,
+	creation_date VARCHAR(20) NOT NULL
 );
