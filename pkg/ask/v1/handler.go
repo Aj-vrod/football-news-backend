@@ -29,7 +29,6 @@ func AskV1Handler(w http.ResponseWriter, req *http.Request) {
 		Answer: ans,
 	}
 	outJSON, _ := json.Marshal(out)
-	w.WriteHeader(http.StatusAccepted)
 	w.Write(outJSON)
 }
 
