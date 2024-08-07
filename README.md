@@ -36,7 +36,8 @@ Find infrastructure digragram [here](https://miro.com/welcomeonboard/QmdaZmNUV0x
 - [x] Update Dockerfile to include Gemini token
 - [x] Move Docker env outside, to prevent hardcoded values
 - [ ] Create curated prompt for Gemini
-- [ ] Create DB client to enable `INSERT` and `SELECT` queries
+- [x] Create validation for "date" and "query" values
+- [x] Create DB handler to enable `INSERT` and `SELECT` queries
 - [ ] Create Storage package to store data into DB
 - [ ] Prevent app to fail when rerunning migration
 - [ ] Create job to trigger scrapper and store incoming news
