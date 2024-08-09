@@ -48,6 +48,7 @@ func (gc GeminiClient) GenerateAnswer(prompt string) string {
 
 }
 
+// parseAnswer parses the raw anser from Gemini and returns a simple string
 func (gc GeminiClient) parseAnswer(resp *genai.GenerateContentResponse) string {
 	for _, cand := range resp.Candidates {
 		if cand.Content != nil {

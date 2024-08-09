@@ -43,6 +43,7 @@ func NewsV1Handler(w http.ResponseWriter, req *http.Request) {
 	w.Write(out)
 }
 
+// validateDate evaluates if the date value provided in the URL is of DD.MM.YYYY format
 func validateDate(date string) bool {
 	// https://regex101.com/r/QgSa5i/1
 	regex := regexp.MustCompile(`[0-9]{2}\.[0-9]{2}\.[0-9]{4}`)
