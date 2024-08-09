@@ -28,17 +28,21 @@ Find infrastructure digragram [here](https://miro.com/welcomeonboard/QmdaZmNUV0x
 
 ## Endpoints
 
-- `/v1/news?query=example-query` - to get latest news about football
-- `/v1/ask` - to ask about football things
+- `/v1/news` - to get all news about football
+- `/v1/news?date=DD.MM.YYYY` - to get news about football of a specific date
+- `/v1/ask?query=example-query` - to ask about football things
 
-## Planned tasks (in no specific order)
+## Planned tasks (in no particular order)
 
 - [x] Update Dockerfile to include Gemini token
 - [x] Move Docker env outside, to prevent hardcoded values
+- [ ] Create file document with LLM to collect knowledgebase about football
+- [ ] Store the knowledge base in an S3 bucket
+- [ ] Retrieve the S3 bucket to serve as context for LLM
 - [ ] Create curated prompt for Gemini
 - [x] Create validation for "date" and "query" values
 - [x] Create DB handler to enable `INSERT` and `SELECT` queries
-- [ ] Create Storage package to store data into DB
+- [x] Create Storage package to store data into DB
 - [ ] Prevent app to fail when rerunning migration
 - [ ] Create job to trigger scrapper and store incoming news
 - [ ] Create cronjob to trigger scraper and storage daily at 8am
