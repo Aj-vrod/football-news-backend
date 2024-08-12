@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: db
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment-name: db
+  template:
+    metadata:
+      labels:
+        deployment-name: db
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: real-football-db
+          image: postgres:latest
+          imagePullPolicy: "IfNotPresent"
+          env:
+           - name: POSTGRES_USER
+             valueFrom:
+               secretKeyRef:
+                 name: db-secrets
+                 key: postgres-username
+           - name: POSTGRES_PASSWORD
+             valueFrom:
+               secretKeyRef:
+                 name: db-secrets
+                 key: postgres-password
+           - name: POSTGRES_DB
+             valueFrom:
+               configMapKeyRef:
+                 name: app-configmap
+                 key: postgres-dbname
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres-pv-volume
+  labels:
+    type: local
+    app: postgres
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pv-claim
+  labels:
+    app: postgres
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+    ports:
+    - name: postgres
+      port: 5432
+      nodePort: 30432
+    type: NodePort
+    selector:
+      app: postgres

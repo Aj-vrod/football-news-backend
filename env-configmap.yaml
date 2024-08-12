@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  POSTGRES_DATABASE: football
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_USERNAME: postgres
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: app-env
+  name: env
