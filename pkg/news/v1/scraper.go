@@ -13,7 +13,7 @@ const (
 	goalNewsURL  = "https://www.goal.com/en-in/news"
 )
 
-func ScraperNews() []models.NewsItem {
+func ScrapeNews() []models.NewsItem {
 	var news []models.NewsItem
 	c := colly.NewCollector()
 
@@ -21,7 +21,7 @@ func ScraperNews() []models.NewsItem {
 		fmt.Println("Visiting ", r.URL.String())
 	})
 
-	err := scrapeNinetyMin(c, &news) // TODO: check link's relationt title
+	err := scrapeNinetyMin(c, &news)
 	if err != nil {
 		fmt.Println("Error scrapping 90Min website", err)
 	}

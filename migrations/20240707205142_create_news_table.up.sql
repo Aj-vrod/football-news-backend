@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS News(
 	news_id serial PRIMARY KEY,
 	title VARCHAR(200) NOT NULL,
-	link VARCHAR(100) NOT NULL,
-	source VARCHAR(100) NOT NULL,
+	link VARCHAR(200) NOT NULL,
+	source VARCHAR(150) NOT NULL,
 	creation_date VARCHAR(20) NOT NULL
 );

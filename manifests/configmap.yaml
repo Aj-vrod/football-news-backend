@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+  labels:
+    app: real-football-db
+data:
+  postgres-dbname: football
+  postgres-dns: postgres://postgres:postgres@db:5432/football?sslmode=disable
+  migrations-path: file://migrations
+  gemini-key: AIzaSyBZB5FDG0hdcErsJ03BQefDiYIPEofDiQU

@@ -1,15 +1,18 @@
 package storer
 
 import (
+	"log"
+
 	"github.com/football-news-backend/pkg/db"
-	newsv1 "github.com/football-news-backend/pkg/news/v1"
+	"github.com/football-news-backend/pkg/models"
 )
 
-// SyncNews calls scraper to get the latest news and stores them in the db
-func SyncNews() {
-	latestNews := newsv1.ScraperNews()
-
+// StoreNews inserts every piece of news into the database
+func StoreNews(latestNews []models.NewsItem) {
 	for _, n := range latestNews {
-		db.DBInstance.CreateNews(n)
+		log.Printf("Inserting news with title: %s \n", n.Title)
+		if err := db.DBInstance.CreateNews(n); err != nil {
+			log.Printf("Failed to insert news with error: %v", err)
+		}
 	}
 }
