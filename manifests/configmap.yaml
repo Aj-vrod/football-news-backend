@@ -8,4 +8,4 @@ data:
   postgres-dbname: football
   postgres-dns: postgres://postgres:postgres@db:5432/football?sslmode=disable
   migrations-path: file://migrations
-  gemini-key: AIzaSyBZB5FDG0hdcErsJ03BQefDiYIPEofDiQU
+  gemini-key: dummy
